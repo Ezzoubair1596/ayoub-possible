@@ -96,3 +96,24 @@ body[data-scene="intro"] .entry {
 html, body {
   touch-action: pan-x pan-y;
 }
+body[data-scene="intro"] main,
+body[data-scene="intro"] .entry,
+body[data-scene="cover"] main,
+body[data-scene="cover"] .case,
+body[data-scene="cover"] .watch {
+  touch-action: none;
+}
+body[data-scene="intro"] .entry span {
+  animation: press-to-enter 0.9s steps(1, end) infinite;
+}
+
+@keyframes press-to-enter {
+  0%, 100% { opacity: 1; }
+  65% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-scene="intro"] .entry span {
+    animation: none;
+  }
+}
