@@ -104,12 +104,12 @@ body[data-scene="cover"] .watch {
   touch-action: none;
 }
 body[data-scene="intro"] .entry span {
-  animation: press-to-enter 0.9s steps(1, end) infinite;
+  animation: press-to-enter 0.9s ease-in-out infinite alternate;
 }
 
 @keyframes press-to-enter {
-  0%, 100% { opacity: 1; }
-  65% { opacity: 0; }
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
