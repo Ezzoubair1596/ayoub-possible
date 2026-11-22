@@ -1,0 +1,85 @@
+* { box-sizing: border-box; }
+body { display: grid; place-items: center; min-height: 100dvh; margin: 0; background: #000; color: white; font-family: system-ui, sans-serif; overflow: hidden; }
+main {
+  position: relative; width: min(100vw, 56.25dvh); aspect-ratio: 9 / 16;
+  overflow: hidden; isolation: isolate; container-type: inline-size;
+}
+.background, .shelf, .orientation { position: absolute; inset: 0; }
+.background {
+  overflow: hidden; background: #03405b url(background.png) center / cover;
+  transition: opacity 2s ease;
+}
+.background::before {
+  content: ""; position: absolute; inset: -16px 0;
+  background: repeating-linear-gradient(0deg, #00c7ef17 0 1px, transparent 1px 5px, #00131c28 5px 7px);
+  animation: scan 2.8s linear infinite;
+}
+.background::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse, transparent 39%, #001622ae 100%);
+}
+.shelf {
+  display: grid; place-items: center;
+  transition: opacity .65s ease, transform .9s ease;
+}
+.case {
+  position: relative; isolation: isolate; overflow: hidden;
+  width: 89cqw;
+  aspect-ratio: 1425 / 2048; border-radius: 8px 12px 12px 8px;
+  border: 2px solid #111b22; border-left: 9px solid #111b22;
+  box-shadow: 0 24px 65px #000a, 0 0 0 1px #8bbed24a, -4px 0 #0007;
+  background: #073449;
+}
+.case img { display: block; width: 100%; height: 100%; }
+.gloss { position: absolute; inset: 0; pointer-events: none; overflow: hidden; box-shadow: inset 2px 0 5px #ffffff55, inset -2px 0 3px #121a22a0; }
+.gloss::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(165deg, transparent 35%, #f5faff24 50%, transparent 65%);
+  transform: translateY(-110%); animation: shine 6.8s ease-in-out infinite;
+}
+.watch {
+  position: absolute; left: 40.5%; top: 76.5%; width: 19.5%; height: 4.35%;
+  min-height: 28px; border: 0; border-radius: 5px; padding: 0;
+  background: transparent; cursor: pointer; touch-action: manipulation;
+}
+.watch:hover { box-shadow: 0 0 20px #ffd23990; }
+.watch:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+.orientation { display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .36s ease; }
+.orientation svg { width: min(53cqw, 210px); }
+.phone { transform-origin: 110px 110px; animation: rotate-phone 1.65s ease-in-out infinite paused; }
+video {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  opacity: 0; pointer-events: none; transition: opacity .18s ease;
+}
+body:not([data-scene="cover"]):not([data-scene="loading"]) .background { opacity: 0; }
+body:not([data-scene="cover"]):not([data-scene="loading"]) .shelf { opacity: 0; transform: scale(.96); pointer-events: none; }
+body[data-scene="orientation"] .orientation { opacity: 1; }
+body[data-scene="orientation"] .phone { animation-play-state: running; }
+body[data-scene="film"] video { opacity: 1; }
+body[data-scene="cover"] .shelf { transition-delay: .2s; }
+.error { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); margin: 0; width: max-content; max-width: 92cqw; padding: 8px 12px; border-radius: 7px; background: #00151e; }
+@keyframes scan { to { transform: translateY(14px); } }
+@keyframes shine { 0%, 15% { transform: translateY(-110%); } 49%, 100% { transform: translateY(110%); } }
+@keyframes rotate-phone { 0%, 15% { transform: rotate(0); } 68%, 100% { transform: rotate(90deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .phone, .gloss::after, .background::before { animation: none; }
+  .phone { transform: rotate(60deg); }
+  .background, .shelf, .orientation, video { transition-duration: .12s; }
+}
+
+.entry {
+  position: absolute; z-index: 3; inset: 0; width: 100%; border: 0;
+  padding: 0 7%; background: #000; color: #fff; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  touch-action: manipulation;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .55s ease, visibility 0s linear .55s;
+}
+body[data-scene="intro"] .entry {
+  opacity: 1; visibility: visible; pointer-events: auto; transition: none;
+}
+.entry-disney { width: 28%; margin-bottom: -2%; }
+.entry-title { width: 100%; display: block; }
+.entry span { margin-top: 12px; font: 600 .85rem/1.4 system-ui, sans-serif; letter-spacing: .22em; }
+.entry:focus-visible span { outline: 1px solid white; outline-offset: 8px; }
+@media (prefers-reduced-motion: reduce) { .entry { transition: none; } }
