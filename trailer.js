@@ -81,7 +81,15 @@ watch.addEventListener("click", async () => {
   }
 });
 
-video.addEventListener("ended", () => restore());
+video.addEventListener("ended", () => {
+  restore();
+
+  if (document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
+  } else if (document.webkitFullscreenElement) {
+    document.webkitExitFullscreen?.();
+  }
+});
 video.addEventListener("error", () => restore(true));
 video.addEventListener("contextmenu", (event) => event.preventDefault());
 
