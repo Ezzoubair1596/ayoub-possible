@@ -60,6 +60,17 @@ watch.addEventListener("click", async () => {
   watch.disabled = true;
   error.hidden = true;
   scene("loading");
+    const page = document.documentElement;
+  const requestFullscreen =
+    page.requestFullscreen || page.webkitRequestFullscreen;
+
+  if (requestFullscreen && !document.fullscreenElement) {
+    try {
+      Promise.resolve(requestFullscreen.call(page)).catch(() => {});
+    } catch {
+      // Continue playing if fullscreen is unavailable.
+    }
+  }
   fadeMusic();
   try {
     video.currentTime = 0;
