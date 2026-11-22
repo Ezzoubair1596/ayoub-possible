@@ -93,3 +93,9 @@ body[data-scene="intro"] .entry {
     transform: translate(-50%, -50%) rotate(-90deg);
   }
 }
+@media (orientation: landscape) and (pointer: coarse) {
+  body[data-scene="cover"] .case {
+    width: min(89cqw, calc((100dvh - 24px) * 1425 / 2048));
+    transform: rotate(90deg);
+  }
+}
