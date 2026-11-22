@@ -103,3 +103,21 @@ entry.addEventListener("click", () => {
   entry.inert = true;
   watch.focus({ preventScroll: true });
 }, { once: true });
+function preventPinch(event) {
+  if (event.touches.length > 1 && event.cancelable) {
+    event.preventDefault();
+  }
+}
+
+const touchOptions = { passive: false, capture: true };
+
+document.addEventListener("touchstart", preventPinch, touchOptions);
+document.addEventListener("touchmove", preventPinch, touchOptions);
+
+function preventZoom(event) {
+  if (event.cancelable) event.preventDefault();
+}
+
+document.addEventListener("gesturestart", preventZoom, touchOptions);
+document.addEventListener("gesturechange", preventZoom, touchOptions);
+document.addEventListener("dblclick", preventZoom);
